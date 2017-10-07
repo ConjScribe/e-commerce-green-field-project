@@ -28,7 +28,7 @@
 </div>
 <!--=============================================================================================  -->
 <!-- Modal for My card list but not done yet-->
-<div ng-controller='myctrl' class="modal fade w3-animate-zoom" id="myModal3" role="dialog">
+<div class="modal fade w3-animate-zoom" id="myModal3" role="dialog">
   <div class="modal-dialog w3-animate-zoom">
 <!-- My card list Modal content -->
     <div class="modal-content w3-animate-zoom">
@@ -37,8 +37,19 @@
         <h4 class="modal-title">My cart list</h4>
       </div>
       <div class="modal-body w3-animate-zoom">
-        <div>{{userdata}}</div>
+        <p  id="list" ng-repeat="ele in userdata">
+          
+          <img height='100px' class="col-sm-6" width='100px' ng-src="{{ele.image}}"><br>
+        <b>Name:</b> {{ele.name}}<br>
+       <b> Price:</b> {{ele.price}} JD<br>
+        <b>By:</b>{{ele.username}}<br>
+        <button class="btn btn-primary">Buy it</button>
+        <button class="btn btn-warning">Remove</button>
       </div>
+      </p><br><center>
+        <button class="btn btn-primary">Buy all</button>
+        <button class="btn btn-warning">Remove all</button>
+      </center><br>
       <div class="modal-footer">
         <button type="button" class="btn btn-default w3-animate-zoom" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span>Close</button>
       </div>

@@ -1,15 +1,27 @@
 angular.module('myapp',[])
 .controller('myctrl',function($scope){
-  //array for items (item in cart)
-$scope.userdata='hi';
 // make default result to hide element
 $scope.isloggedin=true;
-// list item in cart --- not working
+// list item in cart ---
 $scope.addtocard=function (index) {
-  console.log('it works')
-  $scope.userdataa="welcome"
+  $.ajax({
+    async:false,
+    type:'put',
+    url:'/addToCart',
+    data:JSON.stringify({
+      cart:$scope.data[index]
+    })
   // $scope.userdata.push($scope.data[index])
+  })
 }
+  $.ajax({
+  async:false,
+  type:'get',
+  url:'/data',
+  success:function (cart) {
+    $scope.userdata=cart;
+  }
+});
 // logout fuction when logout clicked
 $scope.logout=function(){
     $.ajax({
@@ -34,6 +46,7 @@ $scope.logout=function(){
       }
     })
   };
+
 // login fuction when login clicked
 $scope.Login=function(){
 // get value of username and password input
@@ -64,6 +77,16 @@ var Lpass=$('#Lpass').val();
       }
     }
   })
+
+  $.ajax({
+    async:false,
+    type:'get',
+    url:'/data',
+    success:function (result) {
+        $scope.userdata=result;
+
+      }
+    })
 };
 // get data (items) from server(database)
 $.ajax({
@@ -97,21 +120,28 @@ if(Suser.length<3 || Spass.length<3){
     async:false,
     type:'get',
     url:'/result',
-    success:function (result) {
-      if(result=='false'){
-        $scope.isloggedin=false;
+      success:function (result) {
+        if(result=='false'){
+          $scope.isloggedin=false;
 
-        alert('this username is already exists')
-      }else{
-        $scope.isloggedin=true;
-        alert('successfully registered welcome '+Suser)
+          alert('this username is already exists')
+        }else{
+          $scope.isloggedin=true;
+          alert('successfully registered welcome '+Suser)
+        }
       }
-    }
-  })
-};
+    })
+      $.ajax({
+  async:false,
+  type:'get',
+  url:'/cart',
+  success:function (cart) {
+    $scope.userdata=cart;
+  }
+});
+  };
 ///////////////////////////////////////////
-}
-
+  }
 })
 
 .component('navbar',{
